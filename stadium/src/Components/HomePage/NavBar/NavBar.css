@@ -1,34 +1,33 @@
-.navbar
-{
-    display: flex;
-    background-color: rgb(77, 76, 76);
-    justify-content:space-between;
-    height: 8%;
-    border-radius: 5px;
-}
-.Links
-{ margin-right: 2%;
-   display: flex;
-   gap: 10px;
-   
-}
-.logo
-{   display:flex ;
-    height: 100%;
-    margin-Left:'2%';
-    text-Decoration:none;
-    color:white;
-    text-align: center;
-    gap: 3px;
+.nav{
+    height: 70px;
+    background-color:#1E1E1E;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
 
 }
-.logo[img]
+.left
 {
-    width: 50%;
-    height: 50%;
-    align-self: center;
+    margin-left: 2%;
 }
-.link:hover
-{ transform: scale(1.1);
+
+.links
+{
+    text-decoration: none;
+    color: white;
+   
+}
+.links:hover
+{
+    color:white;
+    transform: scale(1.1);
+}
+.log-inscri
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 2%;
+    gap: 10px;
 
 }

@@ -1,27 +1,32 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
 import './NavBar.css'
-import LogoTeamify from './Teamify.png';
+import {AiOutlineSearch,AiFillSetting} from 'react-icons/ai'
+import {FaRegUserCircle} from 'react-icons/fa'
+import {CgLogOut} from 'react-icons/cg'
+import logo from './../../../Assets/images/Teamify.png'
+import { NavLink,useNavigate} from 'react-router-dom'
+
+
+
+  
+
+   
 function NavBar(props) {
-    return (
-        <div className='navbar'>
-           <div className='logo'>
-                <img src={LogoTeamify}></img>
-                <Link to='/'style={{textDecoration:'none',color:'white',alignSelf:'center'}} ><h4>Teamify</h4></Link>
-           </div>
-         
-            
-           
-            <div className='Links'>
-                <Link to='/inscription' className='link' style={{textDecoration:'none',color:'white'}}>
-                    S'inscrire
-                </Link>
-                <Link to='/connexion' className='link' style={{textDecoration:'none',color:'white'}}>
-                    Connexion
-                </Link>
-            </div>
-        </div>
-    );
+      let history = useNavigate();
+
+  return (
+    <div className="nav">
+        <div className="d-flex justify-content-start left" style={{cursor:'pointer'}}  onClick={()=>{history('/')}}><img src={logo} alt="logo" className="position-relative " style={{top:'8px'}} width="50" height="50" /><span className="h3 mt-3 text-white">Teamify</span></div>
+  
+<div className="log-inscri">
+     <NavLink to='/signup'  className='links' >Sign up</NavLink>
+     <NavLink to='/login' className='links' >Login</NavLink>
+</div>
+
+
+
+    </div>
+  )
 }
 
-export default NavBar;
+export default NavBar
