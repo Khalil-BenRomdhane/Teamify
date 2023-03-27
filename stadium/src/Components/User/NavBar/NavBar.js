@@ -34,7 +34,7 @@ function NavBar(props) {
 <ul className="dropdown-menu dropdown-menu-lg-end" style={{height:'98px'}} aria-labelledby="dropdownMenuButton1">
   <a className="dropdown-item drop  elem goodtext  position-relative"   style={{cursor: 'pointer',bottom:'8px',height:'50px'}} ><span className='position-relative' style={{cursor: 'pointer',top:'7px',right:'16px'}}><AiFillSetting className='ms-3 '/><span className=" h6 position-relative" style={{top:'1.5px',left:'5px'}}>Setting</span></span></a>
   <hr className="position-relative" style={{bottom:'24px'}}/>
-  <a className="dropdown-item drop h6 elem goodtext  position-relative"   style={{cursor: 'pointer',bottom:'40px',height:'46px'}} ><span className='position-relative' style={{cursor: 'pointer',top:'7px',right:'14px'}}>< CgLogOut className='ms-3 '/><span className=" h6 position-relative" style={{top:'1.5px',left:'5px'}}>Deconnect</span></span></a>
+  <a className="dropdown-item drop h6 elem goodtext  position-relative"   style={{cursor: 'pointer',bottom:'40px',height:'46px'}} ><span className='position-relative' style={{cursor: 'pointer',top:'7px',right:'14px'}} onClick={()=>{history('/connexion')}}>< CgLogOut className='ms-3 '/><span className=" h6 position-relative" style={{top:'1.5px',left:'5px'}}>Deconnect</span></span></a>
 
 </ul>
 </div>

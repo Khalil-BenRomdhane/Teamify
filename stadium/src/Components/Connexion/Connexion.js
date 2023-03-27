@@ -3,7 +3,16 @@ import './Connexion.css'
 import {NavLink} from 'react-router-dom'
 import {IoIosEye,IoIosEyeOff} from 'react-icons/io'
 import picture1 from './../../Assets/images/picture1.png'
-function Connexion() {
+import {useNavigate} from 'react-router-dom'
+
+
+
+  
+
+   
+function Connexion() {  
+        let history = useNavigate();
+
 const [status,setStatus]=useState(false);
 const show_password=()=>{
     setStatus(!status);
@@ -47,7 +56,7 @@ console.log(status)
 </div>
 <div className=" d-flex justify-content-center mt-3 ms-1">
 
-<button className='  btn2 text-dark'>Create Account</button></div>
+<button className='  btn2 text-dark' onClick={()=>{history('/inscription')}}>Create Account</button></div>
 <div className=" d-flex justify-content-center mt-4 ms-1">
 
 <NavLink to='/forgetpassword' className='   text-dark'>Forget your password?</NavLink></div>
