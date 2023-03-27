@@ -1,0 +1,57 @@
+.under{
+    text-underline-offset: 9px; 
+}
+.input6{
+    border-radius: 8px;
+    border: 1.5px solid grey ;
+    height: 45px;
+    width: 220px;
+}
+.input7{
+    border-radius: 8px;
+border: 1.5px solid grey ;
+    height: 45px;
+    width: 520px;
+}
+
+.hovering:hover{
+    opacity:0.4 ;
+    display:block !important;
+    cursor: pointer;
+    }
+    .text2{opacity:0;z-index:30;}
+    .hovering:hover .text2{opacity: 1 !important;}
+    .focus{
+
+        border: blue 2.5px solid;
+        
+    
+    
+    }
+
+    .btn-10{
+        font-family: "Helvetica Neue",Helvetica,Arial;
+        border-radius: 23px;
+    border: 1.4px solid rgb(0, 0, 0);
+        height: 35px;
+        width: 100px;
+        background-color: rgb(255, 255, 255);
+    }
+    .btn-9{
+        font-family: "Helvetica Neue",Helvetica,Arial;
+        border-radius: 23px;
+    border: 2px solid rgb(5, 138, 255);
+        height: 35px;
+        width: 100px;
+        background-color:  rgb(5, 138, 255);
+    }
+    .btn-11{
+        font-family: "Helvetica Neue",Helvetica,Arial;
+        border-radius: 23px;
+    border: 2px solid rgb(5, 138, 255);
+        height: 38px;
+        width: 150px;
+        background-color:  rgb(5, 138, 255);
+    }
+    
+   

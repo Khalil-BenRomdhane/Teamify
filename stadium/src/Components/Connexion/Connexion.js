@@ -25,7 +25,6 @@ const password=document.getElementById('password');
 
  }
 }
-console.log(status)
   return (
     <div className="background-connexion">
         <br/>
