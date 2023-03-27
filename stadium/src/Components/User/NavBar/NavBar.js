@@ -28,13 +28,13 @@ const [name,setname]=React.useState('')
      <NavLink to='/user/stadium'  className={({ isActive }) => (isActive ? 'active' : 'notactive')} >STADIUM</NavLink>
      <NavLink to='/user/reservation'  className={({ isActive }) => (isActive ? 'active' : 'notactive')} >RESERVATION</NavLink>
 </div>
-<span className="d-flex justify-content-end margin-left mt-3  text-white position-relative"  >
+<span className="d-flex justify-content-end margin-left mt-3  text-white position-relative" style={{right:'50px'}}  >
 
 <div className="dropdown position-relative"  style={{top:'3px',left:'16px'}}>
 <ul className="dropdown-menu dropdown-menu-lg-end" style={{height:'98px'}} aria-labelledby="dropdownMenuButton1">
-  <a className="dropdown-item drop  elem goodtext  position-relative"   style={{cursor: 'pointer',bottom:'8px',height:'50px'}} ><span className='position-relative' style={{cursor: 'pointer',top:'7px',right:'16px'}} onClick={()=>{history('/user/profile')}}><AiFillSetting className='ms-3 '/><span className=" h6 position-relative" style={{top:'1.5px',left:'5px'}}>Setting</span></span></a>
+  <a className="dropdown-item drop  elem goodtext  position-relative"  onClick={()=>{history('/user/profile')}}  style={{cursor: 'pointer',bottom:'8px',height:'50px'}} ><span className='position-relative' style={{cursor: 'pointer',top:'7px',right:'16px'}} ><AiFillSetting className='ms-3 '/><span className=" h6 position-relative" style={{top:'1.5px',left:'5px'}}>Setting</span></span></a>
   <hr className="position-relative" style={{bottom:'24px'}}/>
-  <a className="dropdown-item drop h6 elem goodtext  position-relative"   style={{cursor: 'pointer',bottom:'40px',height:'46px'}} ><span className='position-relative' style={{cursor: 'pointer',top:'7px',right:'14px'}} onClick={()=>{history('/connexion')}}>< CgLogOut className='ms-3 '/><span className=" h6 position-relative" style={{top:'1.5px',left:'5px'}}>Deconnect</span></span></a>
+  <a className="dropdown-item drop h6 elem goodtext  position-relative" onClick={()=>{history('/login')}}  style={{cursor: 'pointer',bottom:'40px',height:'46px'}} ><span className='position-relative' style={{cursor: 'pointer',top:'7px',right:'14px'}} >< CgLogOut className='ms-3 '/><span className=" h6 position-relative" style={{top:'1.5px',left:'5px'}}>Deconnect</span></span></a>
 
 </ul>
 </div>

@@ -12,6 +12,9 @@ import Reservation from '../User/Reservation/Reservation';
 import Editprofile from '../User/Editprofile/Editprofile';
 import Stadiumprofile from '../User/Stadiumprofile/Stadiumprofile';
 import SearchStadium from '../User/SearchStadium/SearchStadium';
+import  Checkemail  from './../ForgetPassword/Checkemail/Checkemail'
+import  Keycheck  from './../ForgetPassword/CheckKey/Keycheck'
+import Setnewpassword from '../ForgetPassword/SetnewPassword/Setnewpassword';
 
 function Main(props) {
     return (
@@ -21,6 +24,9 @@ function Main(props) {
                 <Route path='/' element={<Home/>}></Route>
                 <Route path='/signup' element={<Inscription/>}></Route>
                 <Route path='/login' element={<Connexion/>}></Route>
+                <Route path='/forgetpassword' element={<Checkemail/>}></Route>
+                <Route path='/checkkey' element={<Keycheck/>}></Route>
+                <Route path='/setnewpassword' element={<Setnewpassword/>}></Route>
                 <Route path='/user/' element={<HomeUser/>}></Route>
                 <Route path='/user/stadium' element={<Stadium/>}></Route>
                 <Route path='/user/reservation' element={<Reservation/>}></Route>
