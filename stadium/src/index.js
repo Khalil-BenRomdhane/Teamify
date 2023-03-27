@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { Login } from "./Components/Login/Login";
+
 import SignupPage from "./Components/Create-account/first-page/SignupPage";
 import { BrowserRouter } from "react-router-dom";
 import Main from "./Components/Main/Main";
