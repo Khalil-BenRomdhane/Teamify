@@ -1,0 +1,28 @@
+.input{
+    border-radius: 8px;
+
+    height: 45px;
+    width: 90%;
+}
+.btn1{
+    font-family: "Helvetica Neue",Helvetica,Arial !important;
+
+    border-radius: 23px !important;
+    height: 45px;
+    width: 80%;
+    opacity: 0.45;
+}
+.btn2{
+    font-family: "Helvetica Neue",Helvetica,Arial;
+    border-radius: 23px;
+border: 2px solid black;
+    height: 45px;
+    width: 80%;
+    background-color: white;
+}
+.border-btm{
+    border-bottom: 1px black solid !important;
+}
+.background-connexion{
+    background-color:#F8F8F8;
+}
