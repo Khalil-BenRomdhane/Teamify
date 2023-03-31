@@ -110,17 +110,59 @@ res.send(result)
 //set reaction
 router.put('/setreaction/:id', async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
- try {
-     await Reaction.updateOne({id:req.params.id},{reaction:req.body.reaction,$push: { id_users:req.body.id_users }}).then((result) => {
-res.send(result)
-                    console.log("valide");})
-                        
-    }catch (err) {
-      return res.status(400).send({ message: err.message });
-    }
-  
+  try {
+    const { id_users, reaction } = req.body;
 
-  })
+    const reactionDoc = await Reaction.findOne({ id: req.params.id });
+
+    if (!reactionDoc) {
+      return res.status(404).send({ message: 'Reaction not found' });
+    }
+
+    const userIndex = reactionDoc.id_users.findIndex((user) => user.id === id_users.id);
+
+    let updateQuery;
+
+    if (userIndex > -1) {
+      // User has already reacted
+      const oldReactionType = reactionDoc.id_users[userIndex].reaction;
+
+      if (oldReactionType === reaction) {
+        // User has already reacted with the same reaction
+        return res.sendStatus(200);
+      }
+
+      updateQuery = {
+        $inc: {
+          [`reaction.${oldReactionType}`]: -1,
+          [`reaction.${reaction}`]: 1,
+        },
+        $set: {
+          [`id_users.${userIndex}`]: id_users,
+        },
+      };
+    } else {
+      // User has not reacted yet
+      updateQuery = {
+        $addToSet: { id_users: id_users },
+        $inc: { [`reaction.${reaction}`]: 1 },
+      };
+    }
+
+    const updatedReactionDoc = await Reaction.findOneAndUpdate(
+      { id: req.params.id },
+      updateQuery,
+      { new: true } // Return the updated document
+    );
+
+    res.sendStatus(200);
+  } catch (err) {
+    return res.status(400).send({ message: err.message });
+  }
+});
+
+
+
 
    
 

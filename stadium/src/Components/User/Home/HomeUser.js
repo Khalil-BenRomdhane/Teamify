@@ -7,6 +7,16 @@ import test from './../../../Assets/images/test.png'
 
 import NavBar from '../NavBar/NavBar'
 import PostCard from './PostCard';
+
+function getSelectedReaction(id, id_users) {
+  for (const user of id_users) {
+    if (user.id === id) {
+      return user.reaction;
+    }
+  }
+  return null;
+}
+
 function HomeUser() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [user, setuser] = useState([]);
@@ -159,28 +169,57 @@ function getCookie(name) {
 
 </div>
 </div>
+
 {(status=='500')?<div className='d-flex justify-content-center ms-1 mt-5 h4 pt-5'>There is no Post</div>:
 
  (posts?.length !== 0)?[...posts].reverse().map((element,index)=>
 reaction.map((el,inde)=>{
+  const selectedReaction = getSelectedReaction(id, el.id_users);
+
+
 if(el.id===element.id){
-  return(
-<div className="d-flex justify-content-center mt-4 ">
+ 
+ 
 
-  <PostCard nom={element.author} photo={element.id_user} duree={element.date} 
-  content={element.content}
-  selectedButton={selectedButton}
-  heart={el.reaction.heart}
-  like={el.reaction.like}
-  dislike={el.reaction.dislike}
-  id={element.id}
 
-  setSelectedButton={setSelectedButton}
- />
-</div>
+        return(selectedReaction  ? <div className="d-flex justify-content-center mt-4 ">
+        <PostCard nom={element.author} photo={element.id_user} duree={element.date} 
+        content={element.content}
+        selectedButton={selectedButton}
+        heart={el.reaction.heart}
+        like={el.reaction.like}
+        dislike={el.reaction.dislike}
+        id={element.id}
+      selected={(selectedReaction=='heart')?'react1':(selectedReaction=='like')?'react2':(selectedReaction=='dislike')?'react3':''}
+        setSelectedButton={setSelectedButton}
+       />
+      </div>:<div className="d-flex justify-content-center mt-4 ">
+        <PostCard nom={element.author} photo={element.id_user} duree={element.date} 
+        content={element.content}
+        selectedButton={selectedButton}
+        heart={el.reaction.heart}
+        like={el.reaction.like}
+        dislike={el.reaction.dislike}
+        id={element.id}
+      selected={null}
+        setSelectedButton={setSelectedButton}
+       />
+      </div>)
+}
+}
 
-  )}
-})):<>
+)
+
+
+   
+      
+      )
+      
+      
+      
+  
+
+:<>
 <div className="d-flex justify-content-center position-relative" style={{top:'200px'}}>
 <div class="spinner-border" role="status">
  

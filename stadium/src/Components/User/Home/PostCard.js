@@ -18,7 +18,7 @@ function PostCard(props) {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
-  var id=getCookie('id')
+  var id=getCookie('user_id')
   //fonction get user by id
   const get=async() =>{
   await   fetch('http://localhost:4000/getbyid', {
@@ -46,9 +46,28 @@ function PostCard(props) {
     const [likes, setLikes] = useState(props.like);
   const [hearts, setHearts] = useState(props.heart);
   const [dislikes, setDislikes] = useState(props.dislike);
-  const [selectedButton, setSelectedButton] = useState('');
+  const [selectedButton, setSelectedButton] = useState(props.selected);
 
-  const change = (status) => {
+  const change = (status,e) => {
+    fetch(`http://localhost:4003/posts/setreaction/${props.id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        id_users: {id:id,reaction:e},
+         reaction: e
+ 
+      }),
+      headers: {
+        "Content-Type":"application/json"
+      },
+   })
+ .then((result) => {
+console.log(result.status)
+ 
+ })
+
+
+
+
     if (status === 'react1' && selectedButton !== 'react1') {
       setHearts((prev) => prev + 1);
       if (selectedButton === 'react2') {
@@ -245,7 +264,7 @@ document.querySelector('.hy').classList.add('d-none')})
             style={{ cursor: 'pointer' }}
             className="text-white pb-1"
             onClick={() => {
-              change('react1');
+              change('react1','heart');
             }}
             size={23}
           />
@@ -254,7 +273,7 @@ document.querySelector('.hy').classList.add('d-none')})
           <AiFillLike
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              change('react2');
+              change('react2','like');
             }}
             className="text-white pb-1"
             size={23}
@@ -264,7 +283,7 @@ document.querySelector('.hy').classList.add('d-none')})
           <AiFillDislike
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              change('react3');
+              change('react3','dislike');
             }}
             className="text-white pb-1"
             size={23}
