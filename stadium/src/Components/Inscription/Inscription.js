@@ -1077,6 +1077,9 @@ if(picturevalide){
       </Stepper>
       {steps[activeStep].content}
       <div className="d-flex justify-content-center mt-4 ">
+        {activeStep === 0 && (
+          <button onClick={() => history('/login')} className='btn-previous h5 ms-3 text-white'>Previous</button>
+        )}
         {activeStep > 0 && (
           <button onClick={() => setActiveStep((prevActiveStep) => prevActiveStep - 1)} className='btn-previous h5 ms-3 text-white'>Previous</button>
         )}
