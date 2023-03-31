@@ -2,8 +2,8 @@ const nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'ayoubelouni6@gmail.com',
-      pass: 'tkuchvrzcxwthljl'
+      user: 'teamify.service@gmail.com',
+      pass: 'jbdmrjisvtcqdecb'
     },tls: {
         // do not fail on invalid certs
         rejectUnauthorized: false
@@ -13,7 +13,7 @@ var transporter = nodemailer.createTransport({
   });
 function sendmail(email,nom){
  var mailOptions = {
-    from: 'ayoubelouni6@gmail.com',
+    from: 'teamify.service@gmail.com',
     to:email,
     subject: 'Inscription',
     attachments: [{

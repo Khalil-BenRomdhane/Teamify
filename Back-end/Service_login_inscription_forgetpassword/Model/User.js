@@ -21,24 +21,11 @@ password:{
     required:true,
 },
 
-tel:{
+phone:{
     type:String,
     required:true,
 },
-cin:{
-    type:String,
-    required:true,
-},
-username:{
-    type:String,
-    required:true,
-},
-role:{
-    type:String,
-    required:true,
-},
-
-date_creation:{
+url:{
     type:String,
     required:true,
 }

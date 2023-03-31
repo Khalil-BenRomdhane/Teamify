@@ -27,6 +27,9 @@ border: 2px solid #E70013;
     .react-calendar__month-view__days__day--weekend {
         color: black !important;
     }
+    .react-calendar__month-view__days__day--weekend:disabled{
+        color: rgba(16, 16, 16, 0.3) !important;
+    }
     .bordering{
         border:2px solid black ;
         border-radius: 7px;
@@ -50,4 +53,6 @@ border: 2px solid #E70013;
     .reserved{
         background-color: #E70013;
         color: white;
+        pointer-events: none;
+        opacity: 0.6; 
     }

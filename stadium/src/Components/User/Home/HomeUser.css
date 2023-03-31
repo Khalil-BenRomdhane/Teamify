@@ -56,3 +56,18 @@ background-color: #0C82EE;
         background-color: rgb(45, 8, 255);
         transform: translateX(-50%);
     }
+
+
+  
+      .dropbtn {
+     padding: 4px ;
+     font-size: 20px ;
+     font-weight: bold ;
+        display: inline;
+        margin-right: 5px;
+        border:0px solid black;
+        cursor: pointer;
+        background-color: #D9D9D9 !important;
+      }
+      
+     

@@ -1,21 +1,102 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import './Stadium.css'
 import NavBar from '../NavBar/NavBar'
 import academy from './../../../Assets/images/ooredoo.jpg'
 import {MdLocationOn} from 'react-icons/md'
 import Card from './Card'
 function Stadium() {
+
+
+  const [user, setuser] = useState([]);
+
+  useEffect(()=>{
+
+    get();
+  },[])
+    
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+  var id=getCookie('user_id')
+  //fonction get user by id
+  const get=async() =>{
+  await   fetch('http://localhost:4000/getbyid', {
+     method: 'POST',
+     body: JSON.stringify({
+         id:id,
+      }),
+      headers: {
+        "Content-Type":"application/json"
+      },
+      
+    
+  })
+  .  then(function(response){
+     return response.json();
+   })
+   .then(function(myJson) {
+    // console.log(myJson[0]);
+     setuser(myJson[0]);
+   });
+  
+  
+  }
+  const [stadiums,setstadiums] =useState([])
+  useEffect(()=>{
+    fetch('http://localhost:4000/getallstadium')
+    .then(response => response.json())
+    .then(response =>setstadiums(response))
+    .catch(err => console.error(err));
+  }, [])
+
+  useEffect(()=>{
+    checkUserIdCookie();
+  },[])
+  
+  function checkUserIdCookie() {
+    const userId = getCookie('user_id');
+    if (!userId) {
+      // Redirect the user to the login page
+      window.location.href = '/login';
+    }
+  }
+  
+  function getCookie(name) {
+    const cookieString = document.cookie;
+    if (cookieString) {
+      const cookies = cookieString.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(`${name}=`)) {
+          return cookie.substring(`${name}=`.length, cookie.length);
+        }
+      }
+    }
+    return null;
+  }
+
+
+  
   return (
     <div>
-        <NavBar username='ayoubouni' />
-<div className="d-flex justify-content-center mt-5 "><Card nom='Ooredoo Football Academy Sousse' location='Sousse,Tunisia' photo={academy} id='5'/></div>
-<div className="d-flex justify-content-center mt-4 "><Card nom='Ooredoo Football Academy Sousse' location='Sousse,Tunisia' photo={academy} /></div>
-<div className="d-flex justify-content-center mt-4 "><Card nom='Ooredoo Football Academy Sousse' location='Sousse,Tunisia' photo={academy} /></div>
-<div className="d-flex justify-content-center mt-4 "><Card nom='Ooredoo Football Academy Sousse' location='Sousse,Tunisia' photo={academy} /></div>
-<div className="d-flex justify-content-center mt-4 "><Card nom='Ooredoo Football Academy Sousse' location='Sousse,Tunisia' photo={academy} /></div>
-<div className="d-flex justify-content-center mt-4 "><Card nom='Ooredoo Football Academy Sousse' location='Sousse,Tunisia' photo={academy} /></div>
-<div className="d-flex justify-content-center mt-4 "><Card nom='Ooredoo Football Academy Sousse' location='Sousse,Tunisia' photo={academy} /></div>
+      <NavBar username={`${user.nom} ${user.prenom}`} id={user.id} />
+     { (stadiums.length!==0)?stadiums.map((element,index)=>{
 
+return(
+<div key={index} className="d-flex justify-content-center mt-5 "><Card nom={element.name} location={element.location} avis={5} photo={`http://localhost:4000/images/${element.id}/picture.jpeg`} id={element.id}/></div>
+
+)}):<>
+<div className="d-flex justify-content-center position-relative" style={{top:'200px'}}>
+<div class="spinner-border" role="status">
+ 
+</div> </div>
+<div className="d-flex justify-content-center position-relative" style={{top:'220px'}}>
+
+<div className='h3'>Loading</div>
+</div>
+</>}   
 
 
 

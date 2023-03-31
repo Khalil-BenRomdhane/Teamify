@@ -14,8 +14,9 @@ var bodyParser = require('body-parser');
       
    
       const cors=require('cors');
-
-      mongoose.connect('mongodb://localhost:27017/Teamify', { useNewUrlParser: true });
+      
+      mongoose.connect('mongodb+srv://root:root@cluster0.lv4bqbh.mongodb.net/Teamify', { useNewUrlParser: true });
+      // mongoose.connect('mongodb://localhost:27017/Teamify', { useNewUrlParser: true });
       app.options('*',cors());
 
       app.use(express.json());

@@ -3,17 +3,31 @@ import './Forgetpassword.css'
 import {BsEmojiWink} from 'react-icons/bs'
 import {HiLockClosed} from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
+import {Checkpassword} from './CheckData';
+  import { useSelector } from 'react-redux';
 
 function Setnewpassword() {
     const [champvide,setchampvide]=useState(false);
-
+    const [erreur,seterreur]=useState(false);
     const [passwordvalide,setpasswordvalide]=useState(true);
+    const user=useSelector(state => state.user);
  
         let history = useNavigate();
   var [password, setpassword] = useState({pass1: "",pass2:""});
 const retourne=()=>{
     history("/login" );
   }
+
+ useEffect(()=>{
+
+  window.onpopstate =async function(event) {
+    history("/login");
+
+};
+
+ },[]) 
+
+  
 
  var passwordtrue;
   const test=()=>{
@@ -26,10 +40,72 @@ setchampvide(false);
     }
   
   }
- 
- 
+  const testing=()=>{
 
+   
+    if ((Checkpassword(password.pass1)===false)){
+     
+      setpasswordvalide(false);
+        passwordtrue=false;
+      
+    }
+    else{
+      if(password.pass1===password.pass2){
+      setpasswordvalide(true);
+      passwordtrue=true;
+    }
+    else{
+      setpasswordvalide(false);
+      passwordtrue=false;
+    }
+  
+  
+  }
+  }
+  const envoyer=async(e)=>{
+    e.preventDefault();
+    var t=120;
+    document.cookie = `time=${t}`;
+     testing();
+     test();
 
+    if(passwordtrue){
+   fetch('http://localhost:4000/setnewpassword', {
+    method: 'POST',
+    body: JSON.stringify({
+       email:user[0],
+       password: password.pass1,
+    }),
+    headers: {
+      "Content-Type":"application/json"
+    },
+    
+ })
+.then((result) => {
+if (result.status != 200) {
+  seterreur(true);
+    console.log("error");
+}
+else{
+   
+history('/login');
+};
+})
+ }}
+ const show_password=()=>{
+        
+  const password1=document.getElementById('pass1');
+  const password2=document.getElementById('pass2');
+   if(password1.type==="text"){
+      password1.type="password";
+      password2.type="password";
+   }
+   else{
+      password1.type="text";
+      password2.type="text";
+  
+   }
+  }
 
   return (
     <div>
@@ -57,12 +133,16 @@ setchampvide(false);
 
                         {((!champvide)&&(passwordvalide===false))?<div style={{marginTop:'19px',fontSize:'17px'}} className=" d-flex justify-content-center text-danger   text-nowrap">Put a valide password</div>:""}
                         {(champvide===true)?<div style={{marginTop:'19px',fontSize:'17px'}} className=" d-flex justify-content-center text-danger   text-nowrap">Please enter new password</div>:""}
+                        {(erreur===true)?<div style={{marginTop:'19px',fontSize:'17px'}} className=" d-flex justify-content-center text-danger   text-nowrap">The Time is Over !!!</div>:""}
 
                       </div>
+                      <div className="pe-3 d-flex justify-content-center mt-3 col-6   ">
+<input type="checkbox" onChange={show_password} className='me-1' style={{width:'17px'}}/>  <label style={{fontSize:'17px'}}>Show password</label>            
+     </div>
                       <br/>
                       <div className='d-flex justify-content-end mt-3'>
                         <button  className="btn-20   me-2"  onClick={retourne} >Annuler</button>
-                        <button  className="btn-21  text-nowrap"  >Valide</button>
+                        <button  className="btn-21  text-nowrap" onClick={envoyer} >Valide</button>
                       </div>
     
                 </div>

@@ -8,7 +8,105 @@ import Teamify from "../../Assets/images/Teamify.png";
 import { Link } from "react-router-dom";
 
 function Connexion() {
-  let history = useNavigate();
+
+
+
+
+
+    let history = useNavigate();
+    const handleKeyDown=(event)=>{
+      if(event.keyCode === 13) { 
+        envoyer(event);      }
+    }
+    
+
+
+
+const [champvide,setchampvide]=useState([]);
+  const [connexionIsValid, setconnexionValid] = useState(true);
+
+  var [user, setuser] = useState({
+    email: "",
+    password: ""
+  });
+  var vide;
+  const sub=async(e)=>{
+
+
+   if(user.email===""||user.password==="")
+   {
+     setchampvide(true);
+     vide=true;
+   }
+   else {
+     setchampvide(false);
+vide=false;
+   }}
+
+
+
+const envoyer=async(e)=>{
+    e.preventDefault();
+    sub();
+    if(!vide){
+   fetch('http://localhost:4000/login', {
+    method: 'POST',
+    body: JSON.stringify({
+       
+       email: user.email,
+       password: user.password,
+      
+
+    }),
+    headers: {
+      "Content-Type":"application/json"
+    },
+ })
+
+
+
+
+.then((result) => {
+
+if (result.status != 200) {
+    console.log("error");
+     setconnexionValid(false);
+
+}
+else{
+
+  console.log(result);
+   setconnexionValid(true);
+
+}
+return result.json();
+
+
+})
+
+// (D) SERVER RESPONSE
+.then((response) => {
+  var expiryDate = new Date();
+  expiryDate.setMonth(expiryDate.getMonth() + 1);
+   document.cookie=`user_id=${response[0].id};expires=${expiryDate};path=/`;
+
+}).then(()=>{
+  history('/user/');
+
+})
+
+// (E) HANDLE ERRORS - OPTIONAL
+.catch((error) => {
+console.log(error);
+});
+  } }
+  window.onpopstate = function(event) {
+
+    
+    history('/login');
+
+};
+
 
   const [status, setStatus] = useState(false);
   const show_password = () => {
@@ -45,7 +143,7 @@ const password=document.getElementById('password');
           <br />
           <div className="ms-5">
             <label className="text-muted h6">Email address</label>
-            <input type="email" className="mt-2 input" />
+            <input  onChange={(e) => { setuser({ ...user, email: e.target.value });}} type="email" className="mt-2 input" />
           </div>
 
           <div
@@ -86,10 +184,12 @@ const password=document.getElementById('password');
           </div>
           <div className="ms-5  ">
             <label className="text-muted h6">Password</label>
-            <input type="password" id="password" className="mt-2 input" />
+            <input type="password" onKeyDown={handleKeyDown} onChange={(e) => { setuser({ ...user, password: e.target.value });}} id="password" className="mt-2 input" />
           </div>
+          {((connexionIsValid===false)&&(champvide===false))?<div style={{marginTop:'19px',fontSize:'17px'}} className=" d-flex justify-content-center text-danger little2  text-nowrap">Le mot de passe entré est incorrect</div>:""}
+{(champvide===true)?<div style={{marginTop:'19px',fontSize:'17px'}} className=" d-flex justify-content-center text-danger little2   text-nowrap">Please enter your e-mail and password</div>:""}
           <div className=" d-flex justify-content-center mt-3 ms-1">
-            <button className="btn btn-secondary btn1 text-white">
+            <button onClick={envoyer} className="btn btn-secondary btn1 text-white">
               Log in
             </button>
           </div>
@@ -107,7 +207,7 @@ const password=document.getElementById('password');
             <button
               className="  btn2 text-dark"
               onClick={() => {
-                history("/signup");
+                history("/inscription");
               }}
             >
               Create Account

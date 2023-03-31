@@ -2,53 +2,78 @@ import React,{useState,useEffect} from 'react'
 import './Keycheck.css'
 import {BsFillKeyFill} from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
-
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function Keycheck() {
- 
-  
-    
-      var time = getCookie('time');
-
-      function updateSec() {
-        time--;
-        document.cookie = `time=${time}`;
+    const dispatch=useDispatch();
+    const handleKeyDown=(event)=>{
+      if(event.keyCode === 13) { 
+        envoyer(event);      }
+    }
+    const user=useSelector(state => state.user);
 
 
 
-      var seconds = time % 60;
-        var minutes = Math.floor(time / 60);
-        
-       if( time===60){
-        time--;
+    const [countDownDate, setCountDownDate] = useState(null);
+    const [erer, seterer] = useState("");
+    const [tt, settt] = useState('');
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [intervale, setinterval] = useState(0);
 
-       seconds = time % 60;
-        document.getElementById("seconds").innerHTML = seconds;
-        document.getElementById("minutes").innerHTML = 0;
-       }
-         else{
-            
-            document.getElementById("seconds").innerHTML = seconds;
-            document.getElementById("minutes").innerHTML = minutes; 
-         }
-        
-        if (seconds === 0) {
-          stopTimer();
-        }
+  useEffect(() => {
+    // Get the count down date from localStorage
+    const storedCountDownDate = localStorage.getItem('countDownDate');
+
+    // Check if the countDownDate is already set
+    if (!countDownDate && storedCountDownDate) {
+      // Set the count down date
+      setCountDownDate(storedCountDownDate);
+    } else if (!countDownDate) {
+      // Set the count down date
+      const newCountDownDate = new Date().getTime() + 120000;
+      setCountDownDate(newCountDownDate);
+      localStorage.setItem('countDownDate', newCountDownDate);
+    }
+
+    // Update the count down every 1 second
+    setInterval(()=>{setinterval(intervalId)},1000);
+    let intervalId = setInterval(() => {
+      // Get today's date and time
+      let now = new Date().getTime();
+
+      // Find the distance between now and the count down date
+      let distance = countDownDate - now;
+
+      // Time calculations for minutes and seconds
+      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      setMinutes(minutes)
+      setSeconds(seconds)
+
+      // If the count down is finished
+      if (distance < 0) {
+        clearInterval(intervalId);
+        setCountDownDate(null);
+        localStorage.removeItem('countDownDate');
+          
+      setkey('');
+
+      history("/forgetpassword" );
+    dispatch({
+      type: "supprimer",
+
+   });      
       }
-          var interval = setInterval(updateSec, 1000);
-      function stopTimer() {
-        clearInterval(interval);
-        history("/" );
-        var t=120;
-        document.cookie = `time=${t}`;
-                setkey('');
-       
+    }, 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [countDownDate]);
 
 
-      }
     
-      
     const [champvide,setchampvide]=useState([]);
     const [keyvalide,setkeyValid]=useState(true);
 
@@ -58,10 +83,17 @@ function Keycheck() {
   var [inputkey, setinputkey] = useState({key: ""});
   var [key, setkey] = useState();
 const retourne=()=>{
-    history("/forgetpassword" );
-   
-   var t=120;
-   document.cookie = `time=${t}`;
+  clearInterval(intervale);
+  setCountDownDate(null);
+  localStorage.removeItem('countDownDate');
+  setkey('');
+
+      history("/forgetpassword" );
+    dispatch({
+      type: "supprimer",
+
+   });
+
 
   }
 
@@ -102,20 +134,49 @@ useEffect(()=>{get();},[])
 
     }
     //check for Navigation Timing API support
-
  
+ var msg="";
+    window.onpopstate =async function(event) {
+      var id_token= Math.floor(Math.random() * (5000000 - 1000000 + 1) + 1000000);
+
+     await settt(id_token);
+      
+      history('/keycheck');
+
+};
+
   
-  
-    
+useEffect(()=>{
+if(tt===""){
+  seterer("");
+console.log("jjjj")
+console.log(tt)
+}
+else{
+  seterer("you can return only with button return");
+  console.log("ddd")
+
+  setTimeout(()=>{seterer("");
+msg="";
+},5000);
+
+}
+
+},[tt])    
+
   const envoyer=async(e)=>{
 
     await sub();
     if(!vide){
    if(key==inputkey.key){
+    clearInterval(intervale);
+    setCountDownDate(null);
+    localStorage.removeItem('countDownDate');
+    setkey('');
     setkeyValid(true); 
 history('/setnewpassword');
-var t=120;
-document.cookie = `time=${t}`;
+
+
 }
     else{
         setkeyValid(false);   
@@ -125,19 +186,20 @@ document.cookie = `time=${t}`;
 
   } }
 
+
   return (
     <div>
       
 
 
       <div className="container">
-	<div className="d-flex justify-content-center pt-5">
+	<div className="d-flex justify-content-center ms-4 pt-5">
             <div className="card width-small">
-            <div id="countdown" className="position-relative" style={{right:'4%'}} >
+            <div id="countdown" className="position-relative" style={{right:'-4%'}} >
     <ul>
    
-      <li><span id="minutes"></span>Minutes</li>
-      <li><span id="seconds"></span>Seconds</li>
+      <li><span className='ms-4' id="minutes">{minutes}</span>Minutes</li>
+      <li><span  className='ms-2' id="seconds">{seconds}</span>Seconds</li>
     </ul>
     </div>
 
@@ -147,7 +209,7 @@ document.cookie = `time=${t}`;
                  
     
     
-                          <input id="email" name="email" placeholder="Key"  onChange={(e) => { setinputkey({ key: e.target.value });}} className="form-control"  type="email" />
+                          <input id="email" name="email" placeholder="Key"  onKeyDown={handleKeyDown} onChange={(e) => { setinputkey({ key: e.target.value });}} className="form-control"  type="email" />
                         {((keyvalide===false)&&(champvide===false))?<div style={{marginTop:'19px',fontSize:'17px'}} className=" d-flex justify-content-center text-danger   text-nowrap">Key entré est incorrect</div>:""}
                         {(champvide===true)?<div style={{marginTop:'19px',fontSize:'17px'}} className=" d-flex justify-content-center text-danger   text-nowrap">Please enter your Key</div>:""}
 
